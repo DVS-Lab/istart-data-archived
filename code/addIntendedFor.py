@@ -1,14 +1,17 @@
 
+#imports libraries
 import json
 import os
 import subprocess
-import sys
 
-bidsdir = sys.argv[1]
-
+#gets current working directory If your bids is in the same folder as this file this should work for everyone
+cwd = os.getcwd() 
+bidsdir = os.path.join('%s/bids'%(cwd))
 
 files = os.listdir(bidsdir)
 subs=[x for x in files if x.startswith('sub')]
+
+
 
 for subj in subs:
 
