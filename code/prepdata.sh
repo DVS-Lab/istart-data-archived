@@ -10,7 +10,7 @@
 # 1) containers live under /data/tools on local computer. should these relative paths and shared? YODA principles would suggest so.
 # 2) other projects should use Jeff's python script for fixing the IntendedFor 
 # 3) aside from containers, only absolute path in whole workflow (transparent to folks who aren't allowed to access to raw data)
-sourcedata=/data/sourcedata/srndna
+sourcedata=/data/sourcedata/istart
 
 
 sub=$1
@@ -18,7 +18,7 @@ nruns=$2
 
 
 # set up input and output directories.
-dsroot=`pwd` # assume you are running from the root
+dsroot=/data/projects/istart-data # assume you are running from the root
 codedir=$dsroot/code
 
 
@@ -32,15 +32,9 @@ rm -rf $dsroot/bids/sub-${sub}
 
 
 # PART 1: running heudiconv and fixing fieldmaps
-if [ $sub -gt 121 ]; then
-  singularity run --cleanenv -B $dsroot:/out -B $sourcedata:/sourcedata \
-  /data/tools/heudiconv-0.5.4.simg -d /sourcedata/dicoms/SMITH-AgingDM-{subject}/*/DICOM/*.dcm -s $sub \
-  -f /out/code/heuristics.py -c dcm2niix -b --minmeta -o /out/bids
-else
-  singularity run --cleanenv -B $dsroot:/out -B $sourcedata:/sourcedata \
-  /data/tools/heudiconv-0.5.4.simg -d /sourcedata/dicoms/SMITH-AgingDM-{subject}/scans/*/DICOM/*.dcm -s $sub \
-  -f /out/code/heuristics.py -c dcm2niix -b --minmeta -o /out/bids
-fi
+singularity run --cleanenv -B $dsroot:/out -B $sourcedata:/sourcedata \
+/data/tools/heudiconv-0.5.4.simg -d /sourcedata/dicoms/Smith-ISTART-{subject}/scans/*/*/DICOM/*/*.dcm -s $sub \
+-f /out/code/heuristics.py -c dcm2niix -b --minmeta -o /out/bids
 
 # run Jeff's code to fix field map, but first correct permissions
 chmod -R ug+rw $dsroot/bids/sub-$sub

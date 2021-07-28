@@ -20,7 +20,7 @@ if [ ! -d $scratchdir ]; then
 fi
 
 singularity run --cleanenv -B $maindir:/base -B /data/tools/licenses:/opts -B $scratchdir:/scratch \
-/data/tools/fmriprep-20.2.0.simg \
+/data/tools/fmriprep-20.2.3.simg \
 /base/bids /base/derivatives-test \
 participant --participant_label $sub \
 --cifti-output \

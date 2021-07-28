@@ -1,2 +1,5 @@
 bids/*
 derivatives/*
+code/__py*
+derivatives-test/*
+nm/
