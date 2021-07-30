@@ -14,7 +14,7 @@ sourcedata=/data/sourcedata/istart
 
 
 sub=$1
-nruns=$2
+nruns=1
 
 
 # set up input and output directories.

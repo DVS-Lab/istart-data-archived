@@ -10,8 +10,8 @@ maindir=`pwd` # assume you are running from the root
 
 # make derivatives folder if it doesn't exist.
 # let's keep this out of bids for now
-if [ ! -d $maindir/derivatives-test ]; then
-	mkdir -p $maindir/derivatives-test
+if [ ! -d $maindir/derivatives ]; then
+	mkdir -p $maindir/derivatives
 fi
 
 scratchdir=/data/scratch/`whoami`
@@ -21,7 +21,7 @@ fi
 
 singularity run --cleanenv -B $maindir:/base -B /data/tools/licenses:/opts -B $scratchdir:/scratch \
 /data/tools/fmriprep-20.2.3.simg \
-/base/bids /base/derivatives-test \
+/base/bids /base/derivatives \
 participant --participant_label $sub \
 --cifti-output \
 --output-spaces fsLR \
